@@ -189,7 +189,7 @@ We can create a script in the package.json file to run the TailwindCSS CLI build
 
 And then simply run.
 
-#### npm
+### npm
 
 ```sh
 npm run dev
