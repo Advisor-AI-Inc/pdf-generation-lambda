@@ -1,12 +1,12 @@
-import os
-import uuid
-from playwright.async_api import async_playwright
+from weasyprint import HTML
 from fastapi import FastAPI, Request, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi import Body
 from mangum import Mangum
+import os
+import json
 
 app = FastAPI(title="Resume Generator")
 handler = Mangum(app)
@@ -23,28 +23,30 @@ async def index(request: Request, resume_data: dict = Body(...)):
         "base.html", {"request": request, "resumeData": resume_data}
     )
 
+@app.get("/preview") 
+async def preview(request: Request):
+    # You can optionally provide default dummy data for development
+    with open("./sample_input.json", "r") as f:
+        resume_data = json.load(f)
+
+    return templates.TemplateResponse(
+        "base.html", {"request": request, "resumeData": resume_data}
+    )
+
 
 @app.post("/pdf")
 async def generate_pdf(request: Request, resume_data: dict = Body(...)):
-    # Render the HTML with resumeData
+    # Render the HTML
     html_content = templates.get_template("base.html").render(
         {"request": request, "resumeData": resume_data}
     )
 
-    # Save HTML to a temp file
-    temp_file = f"/tmp/resume-{uuid.uuid4().hex}.html"
-    with open(temp_file, "w", encoding="utf-8") as f:
-        f.write(html_content)
+   # Use file URI base_url to resolve local static files
+    base_path = os.path.abspath("static")  # absolute path to your static folder
+    base_url = f"file://{base_path}/"
 
-    # Generate PDF using Playwright
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        await page.goto(f"file://{os.path.abspath(temp_file)}")
-        pdf_bytes = await page.pdf(format="A4", print_background=True)
-        await browser.close()
-
-    os.remove(temp_file)  # Clean up
+    # Generate PDF
+    pdf_bytes = HTML(string=html_content, base_url=base_url).write_pdf()
 
     student_name = resume_data["personal"]["name"].replace(" ", "_")
     return Response(

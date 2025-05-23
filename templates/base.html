@@ -1,182 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="{{url_for('static',path='/css/app.css')}}" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link href="css/app.css" rel="stylesheet" /> -->
+    <link href="../static/css/app.css" rel="stylesheet" />
   </head>
 
-<body>
-  <div class="p-12 font-serif text-left">
-    <!-- Personal Information -->
-    <div class="text-lg text-center">
-      {{ resumeData.personal.name }}
-    </div>
-    <div class="text-center flex justify-evenly">
-      <span>
-        {{ resumeData.personal.phoneNumber }}
-      </span>
-      <span class="text-blue-400">
-        {{ resumeData.personal.eMail }}
-      </span>
-      <span class="text-blue-400">
-        {{ resumeData.personal.city }}, {{ resumeData.personal.state }}
-      </span>
-      {% if resumeData.links.linkedin %}
-      <span class="text-blue-400">
-        {{ resumeData.links.linkedin }}
-      </span>
+  <body>
+    <div class="container">
+      <!-- Personal Information -->
+      <div class="header-name">{{ resumeData.personal.name }}</div>
+      <div class="contact-info">
+        <span>{{ resumeData.personal.phoneNumber }}</span>
+        <span>
+          <a href="mailto:{{ resumeData.personal.eMail }}"
+            >{{ resumeData.personal.eMail }}</a
+          >
+        </span>
+        <span style="white-space: nowrap">
+          {{ resumeData.personal.city }}, {{ resumeData.personal.state }}
+        </span>
+        {% if resumeData.links.linkedin %}
+        <span>
+          <a href="{{ resumeData.links.linkedin }}"
+            >{{ resumeData.links.linkedin }}</a
+          >
+        </span>
+        {% endif %}
+      </div>
+
+      <hr class="separator" />
+
+      {% if resumeData.personal.about %}
+      <div class="profile">
+        <div class="section-title">Profile</div>
+        <p class="indent-paragraph">{{ resumeData.personal.about }}</p>
+      </div>
       {% endif %}
-    </div>
-    <span class="inline-block text-center h-px w-full bg-black"></span>
 
-    <!-- Profile -->
-    {% if resumeData.personal.about %}
-    <div class="profile">
-      <span class="font-bold">Profile</span>
-      <p class="ml-8">
-        {{ resumeData.personal.about }}
-      </p>
-    </div>
-    {% endif %}
-
-    <!-- Qualifications -->
-    <div class="qualifications">
-      <span class="font-bold">Qualifications</span>
-      <ul class="ml-8">
-        {% if resumeData.qualifications.technicalSkills %}
-        <li>
-          <span class="font-semibold">Technical Skills:</span>
-          <span>{{ resumeData.qualifications.technicalSkills | join(', ') }}</span>
-        </li>
-        {% endif %}
-        {% if resumeData.qualifications.professionalSkills %}
-        <li>
-          <span class="font-semibold">Professional Skills:</span>
-          <span>{{ resumeData.qualifications.professionalSkills | join(', ') }}</span>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-
-    <!-- Education -->
-    <div class="education">
-      <span class="font-bold">Education</span>
-      {% for edu in resumeData.education %}
-      <div class="flex justify-between">
-        <div class="ml-8">
-          <span class="block">{{ edu.university }}</span>
-          <span class="block font-bold">Major: {{ edu.major }}</span>
-          {% if edu.minor %}
-          <span class="block font-bold">Minor: {{ edu.minor }}</span>
-          {% endif %}
-          {% if edu.gpa %}
-          <span class="block">GPA: {{ edu.gpa }}</span>
-          {% endif %}
-        </div>
-        <div>
-          {% if edu.graduationYear %}
-          <span class="block">{{ edu.graduationYear }}</span>
+      <div class="qualifications">
+        <div class="section-title">Qualifications</div>
+        <div class="indent-paragraph">
+          {% if resumeData.qualifications.technicalSkills %}
+          <div>
+            <span style="font-weight: 600">Technical Skills:</span> {{
+            resumeData.qualifications.technicalSkills | join(', ') }}
+          </div>
+          {% endif %} {% if resumeData.qualifications.professionalSkills %}
+          <div>
+            <span style="font-weight: 600">Professional Skills:</span> {{
+            resumeData.qualifications.professionalSkills | join(', ') }}
+          </div>
           {% endif %}
         </div>
       </div>
-      {% endfor %}
-    </div>
 
-    <!-- Related Coursework -->
-    {% if resumeData.relatedCoursework %}
-    <div>
-      <span class="font-bold">Related Coursework</span>
-      <ul class="list-disc ml-8">
-        <span>{{ resumeData.relatedCoursework | join(', ') }}</span>
-      </ul>
-    </div>
-    {% endif %}
-
-    <!-- Honors -->
-    {% if resumeData.honors %}
-    <div>
-      <span class="font-bold">Honors</span>
-      <div class="ml-8">
-        {% for honor in resumeData.honors %}
-        <div>
-          <span>{{ honor.awardName }}, {{ honor.organizationName }}, {{ honor.city }}, {{ honor.state
-            }}</span>
-          <span class="float-right">{{ honor.date }}</span>
+      <div class="education">
+        <div class="section-title">Education</div>
+        {% for edu in resumeData.education %}
+        <div class="flex-between indent-paragraph">
+          <div>
+            <div>{{ edu.university }}</div>
+            <div><strong>Major:</strong> {{ edu.major }}</div>
+            {% if edu.minor %}
+            <div><strong>Minor:</strong> {{ edu.minor }}</div>
+            {% endif %} {% if edu.gpa %}
+            <div>GPA: {{ edu.gpa }}</div>
+            {% endif %}
+          </div>
+          <div class="text-right">
+            {% if edu.graduationYear %}{{ edu.graduationYear }}{% endif %}
+          </div>
         </div>
         {% endfor %}
       </div>
-    </div>
-    {% endif %}
 
-    <!-- Internship Experience -->
-    {% if resumeData.internshipExperience %}
-    <div>
-      <span class="font-bold">Internship Experience</span>
-      {% for internship in resumeData.internshipExperience %}
-      <div class="ml-8">
-        <span class="font-bold">{{ internship.organizationName }}</span>
-        <span>{{ internship.city }}, {{ internship.state }}</span>
-        <span class="float-right">{{ internship.from }} - {{ internship.to }}</span>
-        <ul class="list-disc">
-          {% for bullet in internship.about.split('\\n') %}
-          <li>{{ bullet }}</li>
+      <!-- Related Coursework -->
+      {% if resumeData.relatedCoursework %}
+      <div>
+        <div class="section-title">Related Coursework</div>
+        <div class="indent-paragraph">
+          <span>{{ resumeData.relatedCoursework | join(', ') }}</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Honors -->
+      {% if resumeData.honors %}
+      <div>
+        <div class="section-title">Honors</div>
+        <div class="indent-paragraph">
+          {% for honor in resumeData.honors %}
+          <div class="flex-between">
+            <span
+              >{{ honor.awardName }}, {{ honor.organizationName }}, {{
+              honor.city }}, {{ honor.state }}</span
+            >
+            <span class="text-right">{{ honor.date }}</span>
+          </div>
           {% endfor %}
-        </ul>
+        </div>
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    <!-- Work Experience -->
-    {% if resumeData.workExperience %}
-    <div>
-      <span class="font-bold">Work Experience</span>
-      {% for work in resumeData.workExperience %}
-      <div class="ml-8">
-        <span class="font-bold">{{ work.jobTitle }}</span>
-        <span>{{ work.organizationName }}</span>
-        <span>{{ work.city }}, {{ work.state }}</span>
-        <span class="float-right">{{ work.from }} - {{ work.to }}</span>
-        <ul class="list-disc ml-4">
-          {% for bullet in work.about.split('\\n') %}
-          <li>{{ bullet }}</li>
-          {% endfor %}
-        </ul>
+      <!-- Internship Experience -->
+      {% if resumeData.internshipExperience %}
+      <div>
+        <div class="section-title">Internship Experience</div>
+        {% for internship in resumeData.internshipExperience %}
+        <div class="indent-paragraph">
+          <div class="flex-between">
+            <div>
+              <span><strong>{{internship.organizationName}}</strong></span
+              >{{' '}}
+              <span> {{internship.city}}, {{internship.state}} </span>
+            </div>
+            <span className="float-right">
+              {{internship.from}} - {{internship.to}}
+            </span>
+          </div>
+          <ul>
+            {% for bullet in internship.about.split('\\n') %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    <!-- Leadership Experience -->
-    {% if resumeData.leadershipExperience %}
-    <div>
-      <span class="font-bold">Campus Involvement & Leadership</span>
-      {% for leadership in resumeData.leadershipExperience %}
-      <div class="ml-8">
-        <span>{{ leadership.title }}</span>
-        <span>{{ leadership.clubName }}</span>
-        <span class="float-right">{{ leadership.date }}</span>
+      <!-- Work Experience -->
+      {% if resumeData.workExperience %}
+      <div>
+        <div class="section-title">Work Experience</div>
+        {% for work in resumeData.workExperience %}
+        <div class="indent-paragraph">
+          <span><strong>{{work.jobTitle}}</strong> </span>
+          <span>{{work.organizationName}} </span>
+          <span> {{work.city}}, {{work.state}} </span>
+          <span className="float-right"> {{work.from}} - {{work.to}} </span>
+          <ul>
+            {% for bullet in work.about.split('\\n') %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    <!-- Volunteer Experience -->
-    {% if resumeData.volunteerExperience %}
-    <div>
-      <span class="font-bold">Volunteer Experience</span>
-      {% for volunteer in resumeData.volunteerExperience %}
-      <div class="ml-8">
-        <span>{{ volunteer.organizationName }}</span>
-        <span>{{ volunteer.city }}, {{ volunteer.state }}</span>
-        <span class="float-right">{{ volunteer.date }}</span>
+      <!-- Leadership Experience -->
+      {% if resumeData.leadershipExperience %}
+      <div>
+        <div class="section-title">Campus Involvement & Leadership</div>
+        {% for leadership in resumeData.leadershipExperience %}
+        <div class="indent-paragraph flex-between">
+          <div>
+            <span>{{ leadership.title }}</span>
+            <span>{{ leadership.clubName }}</span>
+          </div>
+          <span class="text-right">{{ leadership.date }}</span>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </div>
-</body>
+      {% endif %}
 
+      <!-- Volunteer Experience -->
+      {% if resumeData.volunteerExperience %}
+      <div>
+        <div class="section-title">Volunteer Experience</div>
+        {% for volunteer in resumeData.volunteerExperience %}
+        <div class="indent-paragraph flex-between">
+          <div>
+            <span>{{ volunteer.organizationName }}</span>
+            <span>{{ volunteer.city }}, {{ volunteer.state }}</span>
+          </div>
+          <span class="text-right">{{ volunteer.date }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </body>
 </html>

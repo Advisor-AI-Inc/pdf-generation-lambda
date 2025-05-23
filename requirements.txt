@@ -9,7 +9,6 @@ fastapi-cli==0.0.7
 greenlet==3.2.2
 h11==0.16.0
 httpcore==1.0.9
-httptools==0.6.4
 httpx==0.28.1
 idna==3.10
 Jinja2==3.1.6
@@ -17,10 +16,8 @@ mangum==0.19.0
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
-playwright==1.52.0
 pydantic==2.11.5
 pydantic_core==2.33.2
-pyee==13.0.0
 Pygments==2.19.1
 python-dotenv==1.1.0
 python-multipart==0.0.20
@@ -37,3 +34,5 @@ uvicorn==0.34.2
 uvloop==0.21.0
 watchfiles==1.0.5
 websockets==15.0.1
+weasyprint<53
+
