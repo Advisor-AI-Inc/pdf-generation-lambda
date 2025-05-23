@@ -9,7 +9,7 @@ COPY . .
 COPY requirements.txt .
 
 # Install system packages needed by WeasyPrint
-# These include Cairo, Pango, GDK-Pixbuf and related fonts
+# Install system packages needed by WeasyPrint
 RUN yum install -y \
     cairo \
     pango \
@@ -21,6 +21,13 @@ RUN yum install -y \
     fontconfig \
     freetype \
     && yum clean all
+
+# Create fonts directory and copy custom fonts
+RUN mkdir -p /usr/share/fonts/custom
+COPY fonts/*.ttf /usr/share/fonts/custom/
+
+# Rebuild font cache so WeasyPrint can find them
+RUN fc-cache -f -v
 
 # Install Python dependencies into Lambda's default directory
 RUN pip install -r requirements.txt --target .
