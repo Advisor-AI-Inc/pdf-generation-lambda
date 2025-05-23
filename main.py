@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Body
 from mangum import Mangum
 import os
@@ -10,6 +11,17 @@ import json
 
 app = FastAPI(title="Resume Generator")
 handler = Mangum(app)
+
+origins = [
+    "*" # Allow all origins for CORS for now, you can restrict this later
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],     # allow POST, GET, OPTIONS etc. change asap 
+    allow_headers=["*"],     # allow all headers change asap
+)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(GZipMiddleware)
