@@ -1,0 +1,30 @@
+{
+    "version": "2.0",
+    "routeKey": "POST /",
+    "rawPath": "/pdf",
+    "rawQueryString": "",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": "{\"personal\":{\"name\":\"Andrew Smith\",\"phoneNumber\":\"123-456-7890\",\"eMail\":\"arjun.1.arora@gmail.com\",\"city\":\"Anytown\",\"state\":\"Anystate\",\"about\":\"Passionate about agriculture and eager to contribute to agricultural research and development.\"},\"links\":{\"linkedin\":\"\"},\"qualifications\":{\"technicalSkills\":[\"Data analysis\",\"Research methodologies\",\"Statistical analysis\"],\"professionalSkills\":[\"Problem-solving\",\"Attention to detail\",\"Team collaboration\"]},\"education\":[{\"university\":\"University of Agriculture\",\"course\":\"Bachelor's in Agriculture, General\",\"isCoursePursuing\":\"False\",\"major\":\"Agricultural Science\",\"minor\":\"\",\"graduationYear\":\"2023\",\"gpa\":\"3.8\"}],\"relatedCoursework\":[\"AGPS 001 - Soils & Plant Nutrition\",\"AGPS 005 - Plant Science\",\"AGPS 032 - Pesticide Laws & Regulations\"],\"honors\":[{\"awardName\":\"Outstanding Student in Agriculture\",\"organizationName\":\"University of Agriculture\",\"city\":\"AgriCity\",\"state\":\"AgriState\",\"date\":\"May-2022\"}],\"internshipExperience\":[{\"organizationName\":\"AgriTech Solutions\",\"city\":\"Farmville\",\"state\":\"AgriLand\",\"from\":\"Jun-2022\",\"to\":\"Aug-2022\",\"about\":\"Conducted field trials to evaluate the effectiveness of new fertilizers - increased crop yield by 15%.\"}],\"workExperience\":[{\"jobTitle\":\"Research Assistant\",\"organizationName\":\"AgriLab Innovations\",\"city\":\"AgriCity\",\"state\":\"AgriState\",\"from\":\"Mar-2021\",\"to\":\"Aug-2021\",\"about\":\"Managed research trials on soil health - implemented new testing method, reducing analysis time by 30%.\"}],\"leadershipExperience\":[{\"title\":\"President\",\"clubName\":\"Agricultural Society\",\"date\":\"Jan-2022\"}],\"volunteerExperience\":[{\"organizationName\":\"Farmers Relief Fund\",\"city\":\"AgriVillage\",\"state\":\"AgriLand\",\"date\":\"Dec-2021\"}]}",
+    "isBase64Encoded": false,
+    "requestContext": {
+      "accountId": "123456789012",
+      "apiId": "api-id",
+      "domainName": "id.execute-api.us-east-1.amazonaws.com",
+      "domainPrefix": "id",
+      "http": {
+        "method": "POST",
+        "path": "/pdf",
+        "protocol": "HTTP/1.1",
+        "sourceIp": "192.168.0.1",
+        "userAgent": "agent"
+      },
+      "requestId": "id",
+      "routeKey": "POST /pdf",
+      "stage": "$default",
+      "time": "12/Mar/2020:19:03:58 +0000",
+      "timeEpoch": 1583348638390
+    }
+  }
+  

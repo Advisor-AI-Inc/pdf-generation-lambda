@@ -8,7 +8,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi import Body
 from mangum import Mangum
 
-app = FastAPI()
+app = FastAPI(title="Resume Generator")
 handler = Mangum(app)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
